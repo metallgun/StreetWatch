@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StreetWatch</title>
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="StyleSheet" type="text/css" href="css/Style.css"/>
+    <script src="js/JavaScript1.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var map = null;
+        ymaps.ready(setup);
+        function setup() {
+            map = new ymaps.Map("mapContainer", {
+                center: [55.76, 37.64],
+                zoom: 7
+            });
+            map.events.add('click', mapClick);
+        }
+
+        function mapClick(e) {
+                var coords = e.get('coords');
+                var oForm = new sv_order();
+                oForm.coords.lattitude = coords[0].toPrecision(6);
+                oForm.coords.longitude = coords[1].toPrecision(6);
+                oForm.planDate = new Date();
+                oForm.planDate.setDate(oForm.planDate.getDate() + 3);
+                showForm(oForm);
+        };
+
+        function showForm(obj_form) {
+            coords.innerHTML = obj_form.coords.lattitude + " " + obj_form.coords.longitude;
+            //orderDate.value = obj_form.planDate;
+            orderDate.innerHTML = obj_form.planDate;
+            orderForm.style.display = "";
+        };
+
+        function cancelClick()
+        {
+            orderForm.style.display = "none";
+        }
+    </script>
+
+    <header>
+    <p class="title">StreetWatch</p>
+    </header>
+
+    <div id="mapContainer"></div>
+
+    <div style="display:none;" id="orderForm">
+        <p>ФИО : <input id="fio" type="text" /></p>
+        <p>Email : <input id="email" type="text" /></p>
+        <p>Координаты : </p> <div class="data" id="coords"></div>
+        <!--<p>Дата выполнения заказа <input id="orderDate" type="text" /></p> :-->
+        <p>Дата выполнения заказа: </p> <div class="data" id="orderDate" ></div>
+        <p>Срочность: <input id="urgent" type="checkbox" /></p>
+        <p>Комментарий:<textarea name="comment" cols="30" rows="3"></textarea></p>
+        <input class="button" id="ok" type="button" value="OK">
+        <input class="button" id="cancel" type="button" value="Cancel" onclick="cancelClick()">
+    </div>
+</body>
+</html>

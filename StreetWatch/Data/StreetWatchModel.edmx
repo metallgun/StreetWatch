@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище StreetWatchDataBaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ДеталиРезультата">
+          <Key>
+            <PropertyRef Name="IDДетали" />
+          </Key>
+          <Property Name="IDФото" Type="int" />
+          <Property Name="IDДетали" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDЗаказа" Type="int" />
+          <Property Name="IDПользователя" Type="int" />
+          <Property Name="КомментКФотке" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="Заказ">
+          <Key>
+            <PropertyRef Name="IDЗаказа" />
+          </Key>
+          <Property Name="IDЗаказа" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Коорд1" Type="float" />
+          <Property Name="Коорд2" Type="float" />
+          <Property Name="ДатаСоздания" Type="datetime" />
+          <Property Name="Комментарий" Type="nvarchar" MaxLength="1000" />
+          <Property Name="PlanDate" Type="datetime" />
+          <Property Name="Urgent" Type="int" />
+          <Property Name="Описание" Type="nvarchar" MaxLength="4000" />
+          <Property Name="IDПользователя" Type="int" />
+          <Property Name="maxКолвоИсполнителей" Type="int" />
+          <Property Name="minКолвоИсполнителей" Type="int" />
+          <Property Name="Статус" Type="int" />
+        </EntityType>
+        <EntityType Name="Заказчик">
+          <Key>
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDПользователя" Type="int" Nullable="false" />
+          <Property Name="БалансСчета" Type="int" />
+        </EntityType>
+        <EntityType Name="Исполнение_заказа">
+          <Key>
+            <PropertyRef Name="IDЗаказа" />
+            <PropertyRef Name="IDИсполнителя" />
+          </Key>
+          <Property Name="IDЗаказа" Type="int" Nullable="false" />
+          <Property Name="IDИсполнителя" Type="int" Nullable="false" />
+          <Property Name="СделаноНесделано" Type="int" />
+          <Property Name="Времяподтверждения" Type="datetime" />
+          <Property Name="ДатавремяИсполнения" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Исполнитель">
+          <Key>
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDПользователя" Type="int" Nullable="false" />
+          <Property Name="ГотовНеготов" Type="int" />
+          <Property Name="ПослМесто1" Type="float" />
+          <Property Name="ПослМесто2" Type="float" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDПользователя" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Почта" Type="nvarchar" MaxLength="100" />
+          <Property Name="ХэшПароля" Type="nvarchar" MaxLength="100" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="80" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" />
+          <Property Name="Обращение" Type="nvarchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Результат">
+          <Key>
+            <PropertyRef Name="IDЗаказа" />
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDЗаказа" Type="int" Nullable="false" />
+          <Property Name="IDПользователя" Type="int" Nullable="false" />
+          <Property Name="Текст" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="СессияПользователя">
+          <Key>
+            <PropertyRef Name="Id_Сессии" />
+          </Key>
+          <Property Name="Id_Сессии" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ВремяНачала" Type="datetime" />
+          <Property Name="Id_Пользователя" Type="int" />
+          <Property Name="КодСессии" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Фото">
+          <Key>
+            <PropertyRef Name="IDФото" />
+          </Key>
+          <Property Name="IDФото" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ПутьКФото" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <Association Name="FK_20">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="0..1" />
+          <End Role="СессияПользователя" Type="Self.СессияПользователя" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="СессияПользователя">
+              <PropertyRef Name="Id_Пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Исполнение_заказа_Исполнитель">
+          <End Role="Исполнитель" Type="Self.Исполнитель" Multiplicity="1" />
+          <End Role="Исполнение_заказа" Type="Self.Исполнение_заказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Исполнитель">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Исполнение_заказа">
+              <PropertyRef Name="IDИсполнителя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_14">
+          <End Role="Заказчик" Type="Self.Заказчик" Multiplicity="0..1" />
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказчик">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Заказ">
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_18">
+          <End Role="Исполнение_заказа" Type="Self.Исполнение_заказа" Multiplicity="1" />
+          <End Role="Результат" Type="Self.Результат" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Исполнение_заказа">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDИсполнителя" />
+            </Principal>
+            <Dependent Role="Результат">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_19">
+          <End Role="Фото" Type="Self.Фото" Multiplicity="0..1" />
+          <End Role="ДеталиРезультата" Type="Self.ДеталиРезультата" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Фото">
+              <PropertyRef Name="IDФото" />
+            </Principal>
+            <Dependent Role="ДеталиРезультата">
+              <PropertyRef Name="IDФото" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_21">
+          <End Role="Результат" Type="Self.Результат" Multiplicity="0..1" />
+          <End Role="ДеталиРезультата" Type="Self.ДеталиРезультата" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Результат">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="ДеталиРезультата">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_4">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Заказчик" Type="Self.Заказчик" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Заказчик">
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_5">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Исполнитель" Type="Self.Исполнитель" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Исполнитель">
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_9">
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="1" />
+          <End Role="Исполнение_заказа" Type="Self.Исполнение_заказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказ">
+              <PropertyRef Name="IDЗаказа" />
+            </Principal>
+            <Dependent Role="Исполнение_заказа">
+              <PropertyRef Name="IDЗаказа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище StreetWatchDataBaseModelContainer">
+          <EntitySet Name="ДеталиРезультата" EntityType="Self.ДеталиРезультата" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Заказ" EntityType="Self.Заказ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Заказчик" EntityType="Self.Заказчик" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Исполнение_заказа" EntityType="Self.Исполнение_заказа" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Исполнитель" EntityType="Self.Исполнитель" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователь" EntityType="Self.Пользователь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Результат" EntityType="Self.Результат" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="СессияПользователя" EntityType="Self.СессияПользователя" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Фото" EntityType="Self.Фото" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_20" Association="Self.FK_20">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="СессияПользователя" EntitySet="СессияПользователя" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Исполнение_заказа_Исполнитель" Association="Self.FK_Исполнение_заказа_Исполнитель">
+            <End Role="Исполнитель" EntitySet="Исполнитель" />
+            <End Role="Исполнение_заказа" EntitySet="Исполнение_заказа" />
+          </AssociationSet>
+          <AssociationSet Name="R_14" Association="Self.R_14">
+            <End Role="Заказчик" EntitySet="Заказчик" />
+            <End Role="Заказ" EntitySet="Заказ" />
+          </AssociationSet>
+          <AssociationSet Name="R_18" Association="Self.R_18">
+            <End Role="Исполнение_заказа" EntitySet="Исполнение_заказа" />
+            <End Role="Результат" EntitySet="Результат" />
+          </AssociationSet>
+          <AssociationSet Name="R_19" Association="Self.R_19">
+            <End Role="Фото" EntitySet="Фото" />
+            <End Role="ДеталиРезультата" EntitySet="ДеталиРезультата" />
+          </AssociationSet>
+          <AssociationSet Name="R_21" Association="Self.R_21">
+            <End Role="Результат" EntitySet="Результат" />
+            <End Role="ДеталиРезультата" EntitySet="ДеталиРезультата" />
+          </AssociationSet>
+          <AssociationSet Name="R_4" Association="Self.R_4">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Заказчик" EntitySet="Заказчик" />
+          </AssociationSet>
+          <AssociationSet Name="R_5" Association="Self.R_5">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Исполнитель" EntitySet="Исполнитель" />
+          </AssociationSet>
+          <AssociationSet Name="R_9" Association="Self.R_9">
+            <End Role="Заказ" EntitySet="Заказ" />
+            <End Role="Исполнение_заказа" EntitySet="Исполнение_заказа" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StreetWatchDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ДеталиРезультата">
+          <Key>
+            <PropertyRef Name="IDДетали" />
+          </Key>
+          <Property Name="IDФото" Type="Int32" />
+          <Property Name="IDДетали" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDЗаказа" Type="Int32" />
+          <Property Name="IDПользователя" Type="Int32" />
+          <Property Name="КомментКФотке" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Фото" Relationship="Self.R_19" FromRole="ДеталиРезультата" ToRole="Фото" />
+          <NavigationProperty Name="Результат" Relationship="Self.R_21" FromRole="ДеталиРезультата" ToRole="Результат" />
+        </EntityType>
+        <EntityType Name="Заказ">
+          <Key>
+            <PropertyRef Name="IDЗаказа" />
+          </Key>
+          <Property Name="IDЗаказа" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Коорд1" Type="Double" />
+          <Property Name="Коорд2" Type="Double" />
+          <Property Name="ДатаСоздания" Type="DateTime" Precision="3" />
+          <Property Name="Комментарий" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="PlanDate" Type="DateTime" Precision="3" />
+          <Property Name="Urgent" Type="Int32" />
+          <Property Name="Описание" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IDПользователя" Type="Int32" />
+          <Property Name="maxКолвоИсполнителей" Type="Int32" />
+          <Property Name="minКолвоИсполнителей" Type="Int32" />
+          <Property Name="Статус" Type="Int32" />
+          <NavigationProperty Name="Заказчик" Relationship="Self.R_14" FromRole="Заказ" ToRole="Заказчик" />
+          <NavigationProperty Name="Исполнение_заказа" Relationship="Self.R_9" FromRole="Заказ" ToRole="Исполнение_заказа" />
+        </EntityType>
+        <EntityType Name="Заказчик">
+          <Key>
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDПользователя" Type="Int32" Nullable="false" />
+          <Property Name="БалансСчета" Type="Int32" />
+          <NavigationProperty Name="Заказ" Relationship="Self.R_14" FromRole="Заказчик" ToRole="Заказ" />
+          <NavigationProperty Name="Пользователь" Relationship="Self.R_4" FromRole="Заказчик" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="Исполнение_заказа">
+          <Key>
+            <PropertyRef Name="IDЗаказа" />
+            <PropertyRef Name="IDИсполнителя" />
+          </Key>
+          <Property Name="IDЗаказа" Type="Int32" Nullable="false" />
+          <Property Name="IDИсполнителя" Type="Int32" Nullable="false" />
+          <Property Name="СделаноНесделано" Type="Int32" />
+          <Property Name="Времяподтверждения" Type="DateTime" Precision="3" />
+          <Property Name="ДатавремяИсполнения" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Заказ" Relationship="Self.R_9" FromRole="Исполнение_заказа" ToRole="Заказ" />
+          <NavigationProperty Name="Исполнитель" Relationship="Self.FK_Исполнение_заказа_Исполнитель" FromRole="Исполнение_заказа" ToRole="Исполнитель" />
+          <NavigationProperty Name="Результат" Relationship="Self.R_18" FromRole="Исполнение_заказа" ToRole="Результат" />
+        </EntityType>
+        <EntityType Name="Исполнитель">
+          <Key>
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDПользователя" Type="Int32" Nullable="false" />
+          <Property Name="ГотовНеготов" Type="Int32" />
+          <Property Name="ПослМесто1" Type="Double" />
+          <Property Name="ПослМесто2" Type="Double" />
+          <NavigationProperty Name="Исполнение_заказа" Relationship="Self.FK_Исполнение_заказа_Исполнитель" FromRole="Исполнитель" ToRole="Исполнение_заказа" />
+          <NavigationProperty Name="Пользователь" Relationship="Self.R_5" FromRole="Исполнитель" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDПользователя" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Почта" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ХэшПароля" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Фамилия" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Обращение" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Заказчик" Relationship="Self.R_4" FromRole="Пользователь" ToRole="Заказчик" />
+          <NavigationProperty Name="Исполнитель" Relationship="Self.R_5" FromRole="Пользователь" ToRole="Исполнитель" />
+          <NavigationProperty Name="СессияПользователя" Relationship="Self.FK_20" FromRole="Пользователь" ToRole="СессияПользователя" />
+        </EntityType>
+        <EntityType Name="Результат">
+          <Key>
+            <PropertyRef Name="IDЗаказа" />
+            <PropertyRef Name="IDПользователя" />
+          </Key>
+          <Property Name="IDЗаказа" Type="Int32" Nullable="false" />
+          <Property Name="IDПользователя" Type="Int32" Nullable="false" />
+          <Property Name="Текст" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ДеталиРезультата" Relationship="Self.R_21" FromRole="Результат" ToRole="ДеталиРезультата" />
+          <NavigationProperty Name="Исполнение_заказа" Relationship="Self.R_18" FromRole="Результат" ToRole="Исполнение_заказа" />
+        </EntityType>
+        <EntityType Name="СессияПользователя">
+          <Key>
+            <PropertyRef Name="Id_Сессии" />
+          </Key>
+          <Property Name="Id_Сессии" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ВремяНачала" Type="DateTime" Precision="3" />
+          <Property Name="Id_Пользователя" Type="Int32" />
+          <Property Name="КодСессии" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Пользователь" Relationship="Self.FK_20" FromRole="СессияПользователя" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="Фото">
+          <Key>
+            <PropertyRef Name="IDФото" />
+          </Key>
+          <Property Name="IDФото" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ПутьКФото" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ДеталиРезультата" Relationship="Self.R_19" FromRole="Фото" ToRole="ДеталиРезультата" />
+        </EntityType>
+        <Association Name="R_19">
+          <End Role="Фото" Type="Self.Фото" Multiplicity="0..1" />
+          <End Role="ДеталиРезультата" Type="Self.ДеталиРезультата" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Фото">
+              <PropertyRef Name="IDФото" />
+            </Principal>
+            <Dependent Role="ДеталиРезультата">
+              <PropertyRef Name="IDФото" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_21">
+          <End Role="Результат" Type="Self.Результат" Multiplicity="0..1" />
+          <End Role="ДеталиРезультата" Type="Self.ДеталиРезультата" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Результат">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="ДеталиРезультата">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_14">
+          <End Role="Заказчик" Type="Self.Заказчик" Multiplicity="0..1" />
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказчик">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Заказ">
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_9">
+          <End Role="Заказ" Type="Self.Заказ" Multiplicity="1" />
+          <End Role="Исполнение_заказа" Type="Self.Исполнение_заказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Заказ">
+              <PropertyRef Name="IDЗаказа" />
+            </Principal>
+            <Dependent Role="Исполнение_заказа">
+              <PropertyRef Name="IDЗаказа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_4">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Заказчик" Type="Self.Заказчик" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Заказчик">
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Исполнение_заказа_Исполнитель">
+          <End Role="Исполнитель" Type="Self.Исполнитель" Multiplicity="1" />
+          <End Role="Исполнение_заказа" Type="Self.Исполнение_заказа" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Исполнитель">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Исполнение_заказа">
+              <PropertyRef Name="IDИсполнителя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_18">
+          <End Role="Исполнение_заказа" Type="Self.Исполнение_заказа" Multiplicity="1" />
+          <End Role="Результат" Type="Self.Результат" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Исполнение_заказа">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDИсполнителя" />
+            </Principal>
+            <Dependent Role="Результат">
+              <PropertyRef Name="IDЗаказа" />
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_5">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Исполнитель" Type="Self.Исполнитель" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="Исполнитель">
+              <PropertyRef Name="IDПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_20">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="0..1" />
+          <End Role="СессияПользователя" Type="Self.СессияПользователя" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="IDПользователя" />
+            </Principal>
+            <Dependent Role="СессияПользователя">
+              <PropertyRef Name="Id_Пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StreetWatchDataBaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ДеталиРезультата" EntityType="Self.ДеталиРезультата" />
+          <EntitySet Name="Заказ" EntityType="Self.Заказ" />
+          <EntitySet Name="Заказчик" EntityType="Self.Заказчик" />
+          <EntitySet Name="Исполнение_заказа" EntityType="Self.Исполнение_заказа" />
+          <EntitySet Name="Исполнитель" EntityType="Self.Исполнитель" />
+          <EntitySet Name="Пользователь" EntityType="Self.Пользователь" />
+          <EntitySet Name="Результат" EntityType="Self.Результат" />
+          <EntitySet Name="СессияПользователя" EntityType="Self.СессияПользователя" />
+          <EntitySet Name="Фото" EntityType="Self.Фото" />
+          <AssociationSet Name="R_19" Association="Self.R_19">
+            <End Role="Фото" EntitySet="Фото" />
+            <End Role="ДеталиРезультата" EntitySet="ДеталиРезультата" />
+          </AssociationSet>
+          <AssociationSet Name="R_21" Association="Self.R_21">
+            <End Role="Результат" EntitySet="Результат" />
+            <End Role="ДеталиРезультата" EntitySet="ДеталиРезультата" />
+          </AssociationSet>
+          <AssociationSet Name="R_14" Association="Self.R_14">
+            <End Role="Заказчик" EntitySet="Заказчик" />
+            <End Role="Заказ" EntitySet="Заказ" />
+          </AssociationSet>
+          <AssociationSet Name="R_9" Association="Self.R_9">
+            <End Role="Заказ" EntitySet="Заказ" />
+            <End Role="Исполнение_заказа" EntitySet="Исполнение_заказа" />
+          </AssociationSet>
+          <AssociationSet Name="R_4" Association="Self.R_4">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Заказчик" EntitySet="Заказчик" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Исполнение_заказа_Исполнитель" Association="Self.FK_Исполнение_заказа_Исполнитель">
+            <End Role="Исполнитель" EntitySet="Исполнитель" />
+            <End Role="Исполнение_заказа" EntitySet="Исполнение_заказа" />
+          </AssociationSet>
+          <AssociationSet Name="R_18" Association="Self.R_18">
+            <End Role="Исполнение_заказа" EntitySet="Исполнение_заказа" />
+            <End Role="Результат" EntitySet="Результат" />
+          </AssociationSet>
+          <AssociationSet Name="R_5" Association="Self.R_5">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Исполнитель" EntitySet="Исполнитель" />
+          </AssociationSet>
+          <AssociationSet Name="FK_20" Association="Self.FK_20">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="СессияПользователя" EntitySet="СессияПользователя" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище StreetWatchDataBaseModelContainer" CdmEntityContainer="StreetWatchDataBaseEntities1">
+          <EntitySetMapping Name="ДеталиРезультата">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.ДеталиРезультата">
+              <MappingFragment StoreEntitySet="ДеталиРезультата">
+                <ScalarProperty Name="IDФото" ColumnName="IDФото" />
+                <ScalarProperty Name="IDДетали" ColumnName="IDДетали" />
+                <ScalarProperty Name="IDЗаказа" ColumnName="IDЗаказа" />
+                <ScalarProperty Name="IDПользователя" ColumnName="IDПользователя" />
+                <ScalarProperty Name="КомментКФотке" ColumnName="КомментКФотке" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Заказ">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Заказ">
+              <MappingFragment StoreEntitySet="Заказ">
+                <ScalarProperty Name="IDЗаказа" ColumnName="IDЗаказа" />
+                <ScalarProperty Name="Коорд1" ColumnName="Коорд1" />
+                <ScalarProperty Name="Коорд2" ColumnName="Коорд2" />
+                <ScalarProperty Name="ДатаСоздания" ColumnName="ДатаСоздания" />
+                <ScalarProperty Name="Комментарий" ColumnName="Комментарий" />
+                <ScalarProperty Name="PlanDate" ColumnName="PlanDate" />
+                <ScalarProperty Name="Urgent" ColumnName="Urgent" />
+                <ScalarProperty Name="Описание" ColumnName="Описание" />
+                <ScalarProperty Name="IDПользователя" ColumnName="IDПользователя" />
+                <ScalarProperty Name="maxКолвоИсполнителей" ColumnName="maxКолвоИсполнителей" />
+                <ScalarProperty Name="minКолвоИсполнителей" ColumnName="minКолвоИсполнителей" />
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Заказчик">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Заказчик">
+              <MappingFragment StoreEntitySet="Заказчик">
+                <ScalarProperty Name="IDПользователя" ColumnName="IDПользователя" />
+                <ScalarProperty Name="БалансСчета" ColumnName="БалансСчета" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Исполнение_заказа">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Исполнение_заказа">
+              <MappingFragment StoreEntitySet="Исполнение_заказа">
+                <ScalarProperty Name="IDЗаказа" ColumnName="IDЗаказа" />
+                <ScalarProperty Name="IDИсполнителя" ColumnName="IDИсполнителя" />
+                <ScalarProperty Name="СделаноНесделано" ColumnName="СделаноНесделано" />
+                <ScalarProperty Name="Времяподтверждения" ColumnName="Времяподтверждения" />
+                <ScalarProperty Name="ДатавремяИсполнения" ColumnName="ДатавремяИсполнения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Исполнитель">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Исполнитель">
+              <MappingFragment StoreEntitySet="Исполнитель">
+                <ScalarProperty Name="IDПользователя" ColumnName="IDПользователя" />
+                <ScalarProperty Name="ГотовНеготов" ColumnName="ГотовНеготов" />
+                <ScalarProperty Name="ПослМесто1" ColumnName="ПослМесто1" />
+                <ScalarProperty Name="ПослМесто2" ColumnName="ПослМесто2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователь">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Пользователь">
+              <MappingFragment StoreEntitySet="Пользователь">
+                <ScalarProperty Name="IDПользователя" ColumnName="IDПользователя" />
+                <ScalarProperty Name="Почта" ColumnName="Почта" />
+                <ScalarProperty Name="ХэшПароля" ColumnName="ХэшПароля" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Обращение" ColumnName="Обращение" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Результат">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Результат">
+              <MappingFragment StoreEntitySet="Результат">
+                <ScalarProperty Name="IDЗаказа" ColumnName="IDЗаказа" />
+                <ScalarProperty Name="IDПользователя" ColumnName="IDПользователя" />
+                <ScalarProperty Name="Текст" ColumnName="Текст" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="СессияПользователя">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.СессияПользователя">
+              <MappingFragment StoreEntitySet="СессияПользователя">
+                <ScalarProperty Name="Id_Сессии" ColumnName="Id_Сессии" />
+                <ScalarProperty Name="ВремяНачала" ColumnName="ВремяНачала" />
+                <ScalarProperty Name="Id_Пользователя" ColumnName="Id_Пользователя" />
+                <ScalarProperty Name="КодСессии" ColumnName="КодСессии" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Фото">
+            <EntityTypeMapping TypeName="StreetWatchDataBaseModel.Фото">
+              <MappingFragment StoreEntitySet="Фото">
+                <ScalarProperty Name="IDФото" ColumnName="IDФото" />
+                <ScalarProperty Name="ПутьКФото" ColumnName="ПутьКФото" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,63 @@
+﻿
+*{
+    padding:0;
+    margin:0 0 0 0px;
+}
+body{
+    background:url(../img/sky.jpg) no-repeat fixed;
+    background-size:cover;   
+}
+
+p {
+    font-family:Arial, Helvetica, sans-serif;
+    color:#4c5d67;
+    font-weight:bold;
+    font-size:20px;
+    margin:10px;
+}
+
+.title{
+    font-size:50px;
+    color:white;
+    text-align:center;
+    padding:10px;
+    margin-bottom:30px;
+}
+
+
+.sideBar {
+    display:inline-block;
+    width:auto;
+    vertical-align: top;
+}
+
+#mapContainer {
+    position:relative;
+    left:25%;
+    display:block;
+    width:640px;
+    height:480px;
+}
+#orderForm
+{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:300px;
+    height:auto; 
+    background-color:white;
+}
+.data
+{
+    display:block;
+    margin-left:10px;
+    margin-right:10px;
+}
+.button{
+    box-shadow:none;
+    margin:10px;
+    margin-right:20px;
+    padding:10px 20px;
+    border-radius:5px;
+    display:inline;
+}

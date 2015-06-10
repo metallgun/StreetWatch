@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C67B003-2FA0-416E-B1AD-817C37B53518}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StreetWatch</RootNamespace>
+    <AssemblyName>StreetWatch</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Authentication\Login.aspx" />
+    <Content Include="Authentication\Menu.aspx" />
+    <Content Include="Authentication\Registration.aspx" />
+    <Content Include="css\Style.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="img\sky.jpg" />
+    <Content Include="js\JavaScript1.js" />
+    <Content Include="MakeOrder.html" />
+    <Content Include="Orders\FulfilledOrders.aspx" />
+    <Content Include="Orders\MakeOrder.aspx" />
+    <Content Include="Orders\MyJobs.aspx" />
+    <Content Include="Orders\MyOrders.aspx" />
+    <Content Include="Orders\NewJobs.aspx" />
+    <Content Include="StreetWatchServer.svc" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication\Enc.cs" />
+    <Compile Include="Authentication\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authentication\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Authentication\Menu.aspx.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authentication\Menu.aspx.designer.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Authentication\Registration.aspx.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authentication\Registration.aspx.designer.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Executioner.cs" />
+    <Compile Include="Classes\Job.cs" />
+    <Compile Include="Classes\Order.cs" />
+    <Compile Include="Classes\Orderer.cs" />
+    <Compile Include="Classes\Result.cs" />
+    <Compile Include="Classes\Session.cs" />
+    <Compile Include="Classes\user.cs" />
+    <Compile Include="Data\StreetWatchModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StreetWatchModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\StreetWatchModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\StreetWatchModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StreetWatchModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ДеталиРезультата.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Заказ.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Заказчик.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Исполнение_заказа.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Исполнитель.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Пользователь.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Результат.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\СессияПользователя.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Фото.cs">
+      <DependentUpon>StreetWatchModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\FulfilledOrders.aspx.cs">
+      <DependentUpon>FulfilledOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orders\FulfilledOrders.aspx.designer.cs">
+      <DependentUpon>FulfilledOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\MakeOrder.aspx.cs">
+      <DependentUpon>MakeOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orders\MakeOrder.aspx.designer.cs">
+      <DependentUpon>MakeOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\MyJobs.aspx.cs">
+      <DependentUpon>MyJobs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orders\MyJobs.aspx.designer.cs">
+      <DependentUpon>MyJobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\MyOrders.aspx.cs">
+      <DependentUpon>MyOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orders\MyOrders.aspx.designer.cs">
+      <DependentUpon>MyOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\NewJobs.aspx.cs">
+      <DependentUpon>NewJobs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orders\NewJobs.aspx.designer.cs">
+      <DependentUpon>NewJobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\JobService.cs" />
+    <Compile Include="Services\JSONHelper.cs" />
+    <Compile Include="Services\OrderService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\UserHelper.cs" />
+    <Compile Include="Services\UserServices.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StreetWatchServer.svc.cs">
+      <DependentUpon>StreetWatchServer.svc</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <EntityDeploy Include="Data\StreetWatchModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>StreetWatchModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Data\StreetWatchModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StreetWatchModel.edmx</DependentUpon>
+      <LastGenOutput>StreetWatchModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\StreetWatchModel.edmx.diagram">
+      <DependentUpon>StreetWatchModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Data\StreetWatchModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StreetWatchModel.edmx</DependentUpon>
+      <LastGenOutput>StreetWatchModel.cs</LastGenOutput>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>17809</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:17124/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
